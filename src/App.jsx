@@ -22,11 +22,12 @@ export default function App() {
           setError(null);
         }
       } catch (err) {
-        if (err.response) {
-          setError(`${err.response.status}: ${err.response.statusText}`);
-        } else {
-          setError(err.message);
-        }
+        // if (err.response) {
+        //   setError(`${err.response.status}: ${err.response.statusText}`);
+        // } else {
+        //   setError(err.message);
+        // }
+        setError(err.message);
       }
     };
     fetchData();
