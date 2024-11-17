@@ -4,7 +4,8 @@ import AddPost from "./components/AddPost.jsx";
 import EditPost from "./components/EditPost.jsx";
 import Posts from "./components/Posts";
 // import initialPosts from "./data/db.js";
-import axios from "axios";
+// import axios from "axios";
+import api from "./api/api.js";
 export default function App() {
   const [posts, setPosts] = useState([]);
   // const [posts, setPosts] = useState(initialPosts);
@@ -14,7 +15,7 @@ export default function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/posts");
+        const response = await api.get("/posts");
 
         if (response && response.data) {
           setPosts(response.data);
@@ -39,8 +40,8 @@ export default function App() {
         id: id.toString(),
         ...newPost,
       };
-      const response = await axios.post(
-        "http://localhost:8000/posts",
+      const response = await api.post(
+        "/posts",
         finalPost
       );
       setPosts([...posts, response.data]);
@@ -52,7 +53,7 @@ export default function App() {
   const handleDeletePost = async (postId) => {
     if (confirm("Are you sure you want to delete the post?")) {
       try {
-        await axios.delete(`http://localhost:8000/posts/${postId}`);
+        await api.delete(`/posts/${postId}`);
         const newPosts = posts.filter((post) => post.id !== postId);
         setPosts(newPosts);
       } catch (err) {
@@ -71,8 +72,8 @@ export default function App() {
   //   };
   const handleEditPost = async (updatedPost) => {
     try {
-      const response = await axios.patch(
-        `http://localhost:8000/posts/${updatedPost.id}`,
+      const response = await api.patch(
+        `/posts/${updatedPost.id}`,
         updatedPost
       );
 
